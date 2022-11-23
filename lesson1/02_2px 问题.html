@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+</body>
+<canvas
+    id="c"
+    width="300"
+    height="600"
+    style="border: 2px solid #ccc"
+></canvas>
+<script>
+
+  const cnv = document.getElementById('c')
+  // 获取 canvas 上下文环境对象
+  const cxt = cnv.getContext('2d')
+
+  // 绘制图形
+  cxt.moveTo(100, 100) // 起点坐标
+  cxt.lineTo(200, 100) // 终点坐标
+  cxt.lineTo(200, 200) // 终点坐标
+  cxt.lineTo(100, 200) // 终点坐标
+  cxt.lineTo(100, 100) // 终点坐标
+  cxt.stroke() // 连接起点终点
+
+  cxt.moveTo(100, 400.5) // 起点坐标
+  cxt.lineTo(200, 400.5) // 终点坐标
+
+  // 默认情况下 canvas 会将线条的中心点和像素的底部对齐，所以会
+  // 导致显示效果是 2px 和非纯黑色问题
+  // 所以 y 轴上这是为 0.5 就可以避免这个问题
+  cxt.moveTo(100, 500) // 起点坐标
+  cxt.lineTo(200, 500) // 终点坐标
+
+  cxt.stroke() // 连接起点终点
+
+</script>
+</html>

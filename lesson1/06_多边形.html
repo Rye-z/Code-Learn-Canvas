@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多边形</title>
+</head>
+<body>
+	<canvas
+			id="c"
+			width="500"
+			height="500"
+			style="border: 1px solid red"
+	></canvas>
+
+</body>
+<script>
+  const cnv = document.getElementById('c')
+  // 获取 canvas 上下文环境对象
+  const ctx = cnv.getContext('2d')
+
+  ctx.strokeStyle = 'skyblue'
+  ctx.lineWidth = 10
+  const x = 50.5
+  const y = 50.5
+  const moveX = 100
+  const moveY = 100
+
+  ctx.moveTo(x, y)
+  ctx.lineTo(x + moveX, y)
+  ctx.lineTo(x + moveX, y + moveY)
+  ctx.lineTo(x, y)
+  // closePath 需要在绘制图形前调用
+  ctx.closePath()
+  ctx.stroke()
+
+  // ================ 不使用 closePath ================
+  ctx.beginPath()
+  const x1 = 200.5
+  const y1 = 50.5
+
+  ctx.moveTo(x1, y1)
+  ctx.lineTo(x1 + moveX, y1)
+  ctx.lineTo(x1 + moveX, y1 + moveY)
+  ctx.lineTo(x1, y1)
+  ctx.stroke()
+
+
+</script>
+</html>

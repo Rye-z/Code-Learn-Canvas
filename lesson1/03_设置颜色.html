@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+</head>
+<body>
+
+</body>
+<canvas
+    id="c"
+    width="300"
+    height="300"
+    style="border: 1px solid #ccc"
+></canvas>
+<script>
+  // 默认情况下 canvas 会将线条的中心点和像素的底部对齐，所以会
+  // 导致显示效果是 2px 和非纯黑色问题
+
+  const cnv = document.getElementById('c')
+  // 获取 canvas 上下文环境对象
+  const cxt = cnv.getContext('2d')
+  cxt.moveTo(50, 50)
+  cxt.lineTo(200, 50)
+
+  cxt.lineWidth = 20
+  cxt.strokeStyle = 'pink'
+  cxt.lineCap = 'butt' // butt 默认；round；square
+  // cxt.lineCap = 'square' // butt 默认；round；square
+  cxt.stroke()
+
+
+</script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas</title>
+</head>
+<body>
+
+</body>
+<canvas
+    id="c"
+    width="300"
+    height="200"
+    style="border: 1px solid #ccc"
+></canvas>
+<script>
+  // Canvas 名叫 “画布”，是 HTML5 新增的一个标签
+  // - 用 JS 动态生成元素
+  // - 位图 -> 受屏幕分辨率影响
+  // - 不支持事件
+  // - 可以用于动画、游戏、数据可视化、图片编辑器、实时视频处理等领域
+
+  // 1. canvas 默认宽高为 300px 150px
+  // 2. 不能通过 css 设置 canvas 宽高，不然内容会被拉伸，
+  //    通过 `height` 和 `width` 属性设置 canvas 的宽高
+  // 3. 线条默认宽度和颜色
+  //    - 线条默认宽度是 `1px`，默认颜色是黑色
+  //    - 但由于默认情况下 `canvas` 会将线条的中心点和像素的底部对齐，所以会导致显示效果是
+  //      2px 和非纯黑色问题
+  // 4. W3C 坐标系
+
+  const cnv = document.getElementById('c')
+  // 获取 canvas 上下文环境对象
+  const cxt = cnv.getContext('2d')
+
+  // 绘制图形
+  cxt.moveTo(100, 100) // 起点坐标
+  cxt.lineTo(200, 100) // 终点坐标
+  cxt.stroke() // 连接起点终点
+
+  console.log(cnv)
+
+</script>
+</html>

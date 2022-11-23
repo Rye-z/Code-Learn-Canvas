@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>描边矩形</title>
+</head>
+<body>
+	<canvas
+			id="c"
+			width="500"
+			height="500"
+			style="border: 1px solid red"
+	></canvas>
+
+</body>
+<script type="module">
+  import {
+    getCanvasInstance,
+    clearCanvas
+  } from '../utils/canvasUtils.js'
+
+  const ctx = getCanvasInstance('c')
+  // 使用 strokeRect 设置描边的属性（颜色、渐变、图案）
+  // strokeRect(x, y, width, height)
+  // - x，y 是左上角起点
+  // width/height 宽高
+
+  // ================ Rect one ================
+  // 样式需要在绘制图形之前设置，不然不生效
+  ctx.strokeStyle = 'skyblue'
+  // 填充颜色
+  ctx.fillStyle = 'pink'
+  // rect one
+  ctx.strokeRect(50.5, 50.5, 150, 150)
+  // 填充
+  ctx.fillRect(65.5, 65.5, 120, 120)
+
+  // ================ rect two ================
+  ctx.beginPath()
+
+  ctx.strokeStyle = 'black'
+  //
+  ctx.rect(200.5, 200.5, 100, 100)
+  ctx.stroke()
+
+  // ================ rect three ================
+  ctx.beginPath()
+  ctx.strokeStyle = 'skyblue'
+  ctx.fillStyle = 'skyblue'
+  ctx.rect(220.5, 220.5, 40, 40)
+  ctx.fill()
+  ctx.stroke()
+
+  // ================ 清空指定区域 ================
+  setTimeout(() => ctx.clearRect(65, 65, 80, 80), 1000)
+  // 清空整个画布
+  clearCanvas(2000)
+
+</script>
+</html>

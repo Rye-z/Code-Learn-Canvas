@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>操作图片1</title>
+</head>
+<body>
+	<canvas
+			id="c"
+			width="500"
+			height="500"
+			style="border: 1px solid red"
+	></canvas>
+</body>
+<script type="module">
+  /**
+   * 按照图片顺序绘制
+   */
+  import {
+    getCanvasInstance,
+    clearCanvas
+  } from '../utils/canvasUtils.js'
+
+  const ctx = getCanvasInstance('c')
+
+  const drawImage = () => {
+    return new Promise((resolve) => {
+      const image = new Image()
+      image.src = './images/img.png'
+      image.onload = () => resolve(image)
+    })
+  }
+
+  const img1 = await drawImage()
+  ctx.drawImage(img1, 40, 40)
+
+  const img2 = await drawImage()
+  ctx.drawImage(img2, 40, 40, 200, 200)
+
+  const img3 = await drawImage()
+  ctx.drawImage(img3, 160, 100, 100, 100, 40, 40, 50, 50)
+
+
+</script>
+</html>
