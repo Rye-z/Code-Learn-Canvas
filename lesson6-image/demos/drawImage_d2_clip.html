@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas clip</title>
+</head>
+<body>
+	<canvas
+			id="c"
+			width="500"
+			height="500"
+			style="border: 1px solid red"
+	></canvas>
+</body>
+<script type="module">
+  /**
+   * 按照图片顺序绘制
+   */
+  import {
+    getCanvasInstance,
+    drawImage,
+    drawSquare
+  } from '../../utils/canvasUtils.js'
+
+  const ctx = getCanvasInstance('c')
+
+  // drawSquare(40, 40, 120, 120)
+  // ctx.clip()
+  drawSquare(160, 160, 100, 100)
+  ctx.clip()
+
+  const img1 = await drawImage('../images/img.png')
+  ctx.drawImage(img1, 40, 40)
+
+
+</script>
+</html>

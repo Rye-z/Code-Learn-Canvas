@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- Author:
+		[html+css/53.html · 石头/js-demo - Gitee](https://gitee.com/qxscj/js-demo/blob/master/html+css/53.html)
+		-->
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas Image Clips</title>
+</head>
+<body>
+	<div>
+		<div style="margin-bottom: 10px;">
+			Upload Image: <input type="file" onchange="onChange(this.files[0])">
+		</div>
+		<canvas id="cvs"></canvas>
+		<div>
+			<canvas id="clipCvs"></canvas>
+		</div>
+		<div>
+			<button id="download">DownLoad Image</button>
+		</div>
+	</div>
+
+</body>
+<script>
+  const cvs = document.getElementById('cvs')
+  ctx = cvs.getContext('2d')
+
+  const clipCvs = document.getElementById('clipCvs')
+  clipCtx = clipCvs.getContext('2d')
+
+  const download = document.getElementById('download')
+  const img = new Image()
+
+  let size = 150
+  let maxW = 400
+  const p = {
+    left: 0,
+    top: 0,
+    stepX: 0,
+    stepY: 0
+  }
+
+  const onChange = (file) => {
+    onInit(URL.createObjectURL(file))
+  }
+
+  // load image, init clip function
+  const onInit = (src) => {
+    clipCvs.width = clipCvs.height = size
+    img.src = src
+    img.onload = () => {
+      let width = img.width
+      let height = img.height
+
+      if (width > maxW) {
+        // 等比例设置宽高
+        height = maxW / width * height
+        width = maxW
+      }
+      cvs.width = width
+      cvs.height = height
+      render(width / 2 - size / 2, height / 2 - size / 2)
+    }
+  }
+
+  const clearCanvas = (instance, ctx) => ctx.clearRect(0, 0, instance.width, instance.height)
+  // render canvas before clip
+  const render = (left = 0, top = 0) => {
+    clearCanvas(cvs, ctx)
+    ctx.drawImage(img, 0, 0, cvs.width, cvs.height)
+
+    // limit boundary
+    if (left < 0) {
+      left = 0
+    }
+    if (left > cvs.width - size) {
+      left = cvs.width - size
+    }
+    if (top < 0) {
+      top = 0
+    }
+    if (top > cvs.height - size) {
+      top = cvs.height - size
+    }
+
+    clipPic(ctx.getImageData(left, top, size, size))
+    ctx.beginPath()
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+    ctx.fillRect(left, top, size, size)
+
+    p.left = left
+    p.top = top
+  }
+
+  // clip picture, show in right side
+  const clipPic = (data) => {
+    clearCanvas(clipCvs, clipCtx)
+    clipCtx.putImageData(data, 0, 0)
+  }
+
+  let isMoving = false
+  let blob = ''
+
+  cvs.onmousedown = (e) => {
+    p.stepX = e.pageX - p.left
+    p.stepY = e.pageY - p.top
+    isMoving = true
+  }
+  cvs.onmousemove = (e) => {
+    if (isMoving) {
+      render(e.pageX - p.stepX, e.pageY - p.stepY)
+    }
+  }
+
+  cvs.onmouseup = async () => {
+    // [HTMLCanvasElement.toDataURL() - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL)
+    // [Data URLs - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)
+    //  - toDataURL(type)
+    const res = await fetch(clipCvs.toDataURL('image/png'))
+    blob = await res.blob()
+    isMoving = false
+  }
+
+  const downloadImg = () => {
+    const a = document.createElement('a')
+    a.setAttribute('download', 'clip.png')
+    // [URL.createObjectURL() - Web API 接口参考 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/URL/createObjectURL)
+    const url = URL.createObjectURL(blob)
+    // blob:http://localhost:63342/4043f320-e698-4b9a-b073-20a613e8646c
+    console.log(url)
+    a.href = url
+    a.click()
+  }
+  download.addEventListener('click', downloadImg)
+
+  onInit('./images.png')
+
+</script>
+</html>

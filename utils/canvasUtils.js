@@ -14,3 +14,21 @@ export function clearCanvas(delay = 0) {
   delay ? setTimeout(doClear, delay) : doClear()
 
 }
+
+export const drawImage = (imgSrc) => {
+  return new Promise((resolve) => {
+    const image = new Image()
+    image.src = imgSrc
+    image.onload = () => resolve(image)
+  })
+}
+
+export const drawSquare = (x, y, w, h) => {
+  cxt.beginPath()
+  cxt.moveTo(x, y)
+  cxt.lineTo(x + w, y)
+  cxt.lineTo(x + w, y + h)
+  cxt.lineTo(x, y + h)
+  cxt.lineTo(x, y)
+  cxt.stroke()
+}
