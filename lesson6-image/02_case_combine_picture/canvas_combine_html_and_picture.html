@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas combine picture and html</title>
+</head>
+<body>
+  <div id="container">
+    <div id="dom" class="graph-legend-wrap">
+      <ul class="legend-list">
+        <li class="compliance">
+          <span>合法</span>
+        </li>
+        <li class="violation">
+          <span>违规</span>
+        </li>
+        <li class="white-list">
+          <span>黑名单</span>
+        </li>
+      </ul>
+    </div>
+    <canvas id="canvas" width="600" height="600"></canvas>
+    <button id="download">download</button>
+  </div>
+
+</body>
+<script type="module">
+  import html2canvas from '../../node_modules/html2canvas/dist/html2canvas.esm.js'
+  import { drawImage } from '../../utils/canvasUtils.js'
+
+  // get a blank canvas
+  // const blankCanvas = document.createElement('black-canvas')
+  const blankCanvas = document.getElementById('canvas')
+  const ctx = blankCanvas.getContext('2d')
+
+  const dom = document.getElementById('dom')
+
+  const canvasElement = await html2canvas(dom)
+
+  const imageURL = await drawImage('../images/img_1.png')
+
+  ctx.drawImage(imageURL, 0, 0)
+  ctx.drawImage(canvasElement, 5, 5, 200, 29, blankCanvas.width - 200 - 20, 10, 200, 29)
+
+  let blob = ''
+  const download = document.getElementById('download')
+
+  const res = await fetch(blankCanvas.toDataURL('image/png'))
+  blob = await res.blob()
+
+  download.addEventListener('click', () => {
+    const a = document.createElement('a')
+    a.setAttribute('download', 'clip.png')
+    // [URL.createObjectURL() - Web API 接口参考 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/URL/createObjectURL)
+    const url = URL.createObjectURL(blob)
+    // blob:http://localhost:63342/4043f320-e698-4b9a-b073-20a613e8646c
+    console.log(url)
+    a.href = url
+    a.click()
+  })
+
+
+</script>
+<style>
+  .graph-legend-wrap {
+    width: 200px;
+    display: grid;
+    place-items: center;
+    height: 42px;
+    z-index: 2;
+    background: #ffffff99;
+    box-shadow: 4px 3px 19px 1px #0000001a;
+    padding: 0 12px;
+  }
+
+  .legend-list {
+    display: flex;
+    column-gap: 12px;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
+
+  .legend-list li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .legend-list li:nth-of-type(1):before {
+     background: #00b42a;
+   }
+  .legend-list li:nth-of-type(2):before {
+     background: #f9711e;
+   }
+  .legend-list li:nth-of-type(3):before {
+     background: gray;
+   }
+
+  .legend-list li::before {
+    content: '';
+    height: 4px;
+    width: 14px;
+    border-radius: 2px;
+    margin-right: 6px;
+  }
+</style>
+</html>
