@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Canvas combine picture and html</title>
+	<meta charset="UTF-8">
+	<title>Canvas combine picture and html</title>
 </head>
 <body>
-  <div id="container">
-    <div id="dom" class="graph-legend-wrap">
-      <ul class="legend-list">
-        <li class="compliance">
-          <span>合法</span>
-        </li>
-        <li class="violation">
-          <span>违规</span>
-        </li>
-        <li class="white-list">
-          <span>黑名单</span>
-        </li>
-      </ul>
-    </div>
-    <canvas id="canvas" width="600" height="600"></canvas>
-    <button id="download">download</button>
-  </div>
+	<div id="container">
+		<div id="dom" class="graph-legend-wrap">
+			<ul class="legend-list">
+				<li class="compliance">
+					<span>合法</span>
+				</li>
+				<li class="violation">
+					<span>违规</span>
+				</li>
+				<li class="white-list">
+					<span>黑名单</span>
+				</li>
+			</ul>
+		</div>
+		<canvas id="canvas" width="600" height="600"></canvas>
+		<button id="download">download</button>
+	</div>
 
 </body>
 <script type="module">
@@ -40,7 +40,7 @@
   const imageURL = await drawImage('../images/img_1.png')
 
   ctx.drawImage(imageURL, 0, 0)
-  ctx.drawImage(canvasElement, 5, 5, 200, 29, blankCanvas.width - 200 - 20, 10, 200, 29)
+  ctx.drawImage(canvasElement, 0, 0, 200, 40)
 
   let blob = ''
   const download = document.getElementById('download')
@@ -88,14 +88,16 @@
   }
 
   .legend-list li:nth-of-type(1):before {
-     background: #00b42a;
-   }
+    background: #00b42a;
+  }
+
   .legend-list li:nth-of-type(2):before {
-     background: #f9711e;
-   }
+    background: #f9711e;
+  }
+
   .legend-list li:nth-of-type(3):before {
-     background: gray;
-   }
+    background: gray;
+  }
 
   .legend-list li::before {
     content: '';
