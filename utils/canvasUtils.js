@@ -12,7 +12,6 @@ export function getCanvasInstance(id) {
 export function clearCanvas(delay = 0) {
   const doClear = () => cxt.clearRect(0, 0, cnv.width, cnv.height)
   delay ? setTimeout(doClear, delay) : doClear()
-
 }
 
 export const drawImage = (imgSrc) => {

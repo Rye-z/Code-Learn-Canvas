@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>绘制直角坐标系</title>
+</head>
+<body>
+	<canvas id="chart"></canvas>
+</body>
+</html>
+<script>
+  const canvas = document.getElementById('chart');
+  const ctx = canvas.getContext('2d');
+
+  // 设置 Canvas 宽高
+  canvas.width = document.documentElement.clientWidth;
+  canvas.height = document.documentElement.clientHeight;
+  // 设置坐标系原点的位置
+  const originX = 50;
+  const originY = canvas.height - 50;
+
+  // 绘制 x 轴
+  ctx.beginPath();
+  ctx.moveTo(originX, originY);
+  ctx.lineTo(canvas.width - 50, originY);
+  ctx.stroke();
+
+  // 绘制 y 轴
+  ctx.beginPath();
+  ctx.moveTo(originX, originY);
+  ctx.lineTo(originX, 50);
+  ctx.stroke();
+
+  // 绘制 x 轴箭头
+  ctx.beginPath();
+  ctx.moveTo(canvas.width - 50, originY);
+  ctx.lineTo(canvas.width - 60, originY + 10);
+  ctx.lineTo(canvas.width - 60, originY - 10);
+  ctx.closePath();
+  ctx.fill();
+
+  // 绘制 y 轴箭头
+  ctx.beginPath();
+  ctx.moveTo(originX, 50);
+  ctx.lineTo(originX - 10, 60);
+  ctx.lineTo(originX + 10, 60);
+  ctx.closePath();
+  ctx.fill();
+
+  // 绘制 x 轴刻度
+  ctx.font = '14px Arial';
+  ctx.textAlign = 'center';
+  for (let i = 1; i <= 10; i++) {
+    const x = originX + i * 50;
+    ctx.beginPath();
+    ctx.moveTo(x, originY - 5);
+    ctx.lineTo(x, originY + 5);
+    ctx.stroke();
+    ctx.fillText(i, x, originY + 20);
+  }
+
+  // 绘制 y 轴刻度
+  ctx.textAlign = 'right';
+  for (let i = 1; i <= 10; i++) {
+    const y = originY - i * 50;
+    ctx.beginPath();
+    ctx.moveTo(originX - 5, y);
+    ctx.lineTo(originX + 5, y);
+    ctx.stroke();
+    ctx.fillText(i, originX - 10, y + 5);
+  }
+
+</script>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+  }
+</style>
